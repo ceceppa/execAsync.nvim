@@ -23,9 +23,9 @@ end
 local run_action = function ()
 	local package = require(package_name)
 
-    package.exec_async('ls', function (output, return_val)
+    package.exec_async('ls -R /', function (output, return_val)
         print('output', vim.inspect(output), return_val)
-    end, true)
+    end, false)
 end
 
 -- unload and run the function from the package

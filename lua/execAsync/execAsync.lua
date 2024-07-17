@@ -5,10 +5,15 @@ local show_notification = require('execAsync.notification')
 local M = {}
 local _latest_output = {}
 
-local function execute_command(command, description, args, on_completed_callback, is_silent)
+local function execute_command(cmd, on_completed_callback, is_silent)
+    local parts = vim.split(cmd, " ")
+    local command = parts[1]
+    local args = vim.list_slice(parts, 2, #parts)
+    local description = 'Running: ' .. cmd
+
     _latest_output = {}
 
-    local on_complete = show_notification(command .. " " .. table.concat(args, ' '), description, is_silent)
+    local on_complete = show_notification(cmd, description, is_silent)
 
     Job:new({
         command = command,
@@ -38,17 +43,13 @@ local function execute_command(command, description, args, on_completed_callback
 end
 
 M.exec_async = function(command, on_completed_callback, is_silent)
-    local parts = vim.split(command, " ")
-
     if is_silent == nil then
         is_silent = false
     end
 
     local ok, _ = pcall(
         execute_command,
-        parts[1],
-        parts[1],
-        vim.list_slice(parts, 2, #parts),
+        command,
         on_completed_callback,
         is_silent
     )
