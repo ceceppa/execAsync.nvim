@@ -8,7 +8,7 @@ local function format_notification_msg(msg, spinner_idx)
     return string.format(" %s %s ", spinner[spinner_idx], msg)
 end
 
-local function show_notification(command, description, is_silent)
+local function show_notification(description, is_silent)
     local run_command
     local on_complete
     local notify_record
@@ -29,7 +29,7 @@ local function show_notification(command, description, is_silent)
             end,
         } or {}
 
-        options.title = command
+        options.title = "Running..."
 
         notify_record = vim.notify(
             format_notification_msg(description, spinner_idx),
