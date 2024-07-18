@@ -13,7 +13,7 @@ local function execute_command(cmd, on_completed_callback, is_silent)
 
     _latest_output = {}
 
-    local on_complete = show_notification(cmd, description, is_silent)
+    local on_complete = show_notification(description, is_silent)
 
     Job:new({
         command = command,
