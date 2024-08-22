@@ -27,14 +27,14 @@ local function execute_command(opts)
             table.insert(_latest_output, data)
 
             if on_stdout then
-                on_stdout(_latest_output)
+                on_stdout(data)
             end
         end,
         on_stderr = function(_, data)
             table.insert(_latest_output, data)
 
             if on_stdout then
-                on_stdout(_latest_output)
+                on_stdout(data)
             end
         end,
         on_exit = function(_, return_val)
@@ -63,12 +63,12 @@ local function execute_command(opts)
 end
 
 M.exec_async = function(opts)
-    opts = vim.tbl_deep_extend("force", opts, {
+    opts = vim.tbl_deep_extend("force", {}, {
         command = nil,
         is_silent = false,
         on_complete = nil,
         on_stdout = nil
-    })
+    }, opts)
 
     local command = opts.command
 
